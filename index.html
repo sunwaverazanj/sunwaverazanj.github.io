@@ -1,1 +1,1142 @@
-<h1>Hamarosan</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunWave Apartments – Ražanj, Rogoznica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sea:       #1a6b8a;
+            --sea-light: #2d9bbf;
+            --sea-pale:  #e8f4f8;
+            --sand:      #f5ede0;
+            --sand-dark: #c8a97a;
+            --coral:     #e06b4a;
+            --white:     #fdfcfa;
+            --dark:      #1c2b35;
+            --text:      #3d4f5c;
+            --text-light:#7a8e99;
+            --radius:    12px;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top:0; left:0; right:0;
+            z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 5%;
+            background: rgba(253,252,250,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200,169,122,0.2);
+            transition: box-shadow .3s;
+        }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(26,107,138,0.1); }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--sea);
+            letter-spacing: 0.02em;
+        }
+        .nav-logo span { color: var(--coral); }
+
+        .nav-links { display:flex; gap:32px; align-items:center; }
+        .nav-links a {
+            text-decoration:none; color:var(--text);
+            font-size:.88rem; font-weight:500; letter-spacing:.04em;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color:var(--sea); }
+
+        .lang-btn {
+            display:flex; gap:4px;
+        }
+        .lang-btn button {
+            border:1px solid var(--sand-dark);
+            background:transparent; padding:4px 10px;
+            border-radius:20px; cursor:pointer;
+            font-size:.8rem; font-family:'DM Sans',sans-serif;
+            color:var(--text-light); transition:all .2s;
+        }
+        .lang-btn button.active {
+            background:var(--sea); border-color:var(--sea);
+            color:white;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction:column;
+            align-items: center; justify-content: center;
+            position: relative;
+            background: linear-gradient(160deg, #1c3d4f 0%, #1a6b8a 50%, #2d9bbf 100%);
+            overflow: hidden;
+            padding: 100px 5% 60px;
+        }
+
+        .hero-waves {
+            position:absolute; bottom:0; left:0; right:0;
+            height:120px; overflow:hidden;
+        }
+        .hero-waves svg { width:100%; height:100%; }
+
+        .hero-particles {
+            position:absolute; inset:0; pointer-events:none;
+        }
+        .particle {
+            position:absolute; border-radius:50%;
+            background:rgba(255,255,255,0.08);
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(0) rotate(0deg); opacity:.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity:0; }
+        }
+
+        .hero-content {
+            text-align:center; color:white; position:relative; z-index:2;
+            animation: heroIn .9s ease both;
+        }
+        @keyframes heroIn {
+            from { opacity:0; transform:translateY(30px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .hero-eyebrow {
+            font-size:.8rem; letter-spacing:.2em; text-transform:uppercase;
+            color:rgba(255,255,255,.6); margin-bottom:16px;
+        }
+        .hero h1 {
+            font-family:'Cormorant Garamond',serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight:300; line-height:1.05;
+            margin-bottom:12px;
+            text-shadow:0 4px 30px rgba(0,0,0,.2);
+        }
+        .hero h1 em { font-style:italic; color:rgba(255,255,255,.75); }
+        .hero-sub {
+            font-size:1rem; color:rgba(255,255,255,.7);
+            letter-spacing:.08em; margin-bottom:40px;
+        }
+
+        .hero-cta {
+            display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center;
+        }
+        .btn-primary {
+            padding:14px 32px; background:var(--coral);
+            color:white; border:none; border-radius:40px;
+            font-family:'DM Sans',sans-serif; font-size:.95rem; font-weight:500;
+            cursor:pointer; text-decoration:none;
+            transition:all .25s; display:inline-block;
+            box-shadow:0 4px 20px rgba(224,107,74,.35);
+        }
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(224,107,74,.45); }
+
+        .btn-outline {
+            padding:14px 32px; background:transparent;
+            color:white; border:1.5px solid rgba(255,255,255,.5);
+            border-radius:40px; font-family:'DM Sans',sans-serif;
+            font-size:.95rem; font-weight:500; cursor:pointer;
+            text-decoration:none; transition:all .25s; display:inline-block;
+        }
+        .btn-outline:hover { background:rgba(255,255,255,.1); border-color:white; }
+
+        .hero-stats {
+            display:flex; gap:40px; justify-content:center;
+            margin-top:60px; flex-wrap:wrap;
+        }
+        .stat { text-align:center; color:white; }
+        .stat-num {
+            font-family:'Cormorant Garamond',serif;
+            font-size:2.4rem; font-weight:600; line-height:1;
+        }
+        .stat-label { font-size:.75rem; color:rgba(255,255,255,.6); letter-spacing:.1em; margin-top:4px; }
+
+        /* ── SECTIONS ── */
+        section { padding:90px 5%; }
+
+        .section-label {
+            font-size:.75rem; letter-spacing:.2em; text-transform:uppercase;
+            color:var(--sea-light); font-weight:500; margin-bottom:10px;
+        }
+        .section-title {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(2rem,4vw,3rem); font-weight:300;
+            color:var(--dark); line-height:1.2; margin-bottom:16px;
+        }
+        .section-title em { font-style:italic; color:var(--sea); }
+        .section-lead {
+            font-size:1rem; color:var(--text-light); max-width:520px;
+            line-height:1.7;
+        }
+
+        /* ── ABOUT ── */
+        #about { background:var(--sand); }
+        .about-grid {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:60px; align-items:center; max-width:1100px; margin:0 auto;
+        }
+        .about-image-stack {
+            position:relative; height:420px;
+        }
+        .about-img {
+            position:absolute; border-radius:16px; overflow:hidden;
+            background:var(--sea-pale);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .about-img.big {
+            width:75%; height:85%; top:0; left:0;
+            background:linear-gradient(135deg,#1a6b8a,#2d9bbf);
+        }
+        .about-img.small {
+            width:52%; height:55%; bottom:0; right:0;
+            background:linear-gradient(135deg,#c8a97a,#f5ede0);
+            border:4px solid var(--sand);
+        }
+        .img-placeholder {
+            text-align:center; color:rgba(255,255,255,.7);
+            font-size:.8rem; padding:20px;
+        }
+        .img-placeholder .icon { font-size:2.5rem; display:block; margin-bottom:8px; }
+
+        .about-text { padding-left:20px; }
+        .about-features {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:16px; margin-top:32px;
+        }
+        .feature-item {
+            display:flex; gap:12px; align-items:flex-start;
+        }
+        .feature-icon {
+            width:38px; height:38px; border-radius:10px;
+            background:var(--sea); color:white;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1rem; flex-shrink:0;
+        }
+        .feature-text strong { display:block; font-size:.9rem; color:var(--dark); }
+        .feature-text span { font-size:.8rem; color:var(--text-light); }
+
+        /* ── APARTMENTS ── */
+        #apartments { background:var(--white); }
+        .apt-header {
+            max-width:1100px; margin:0 auto 50px;
+            display:flex; justify-content:space-between; align-items:flex-end;
+            flex-wrap:wrap; gap:20px;
+        }
+        .apt-grid {
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:28px; max-width:1100px; margin:0 auto;
+        }
+        .apt-card {
+            background:white; border-radius:18px;
+            box-shadow:0 4px 24px rgba(26,107,138,.07);
+            overflow:hidden; transition:transform .3s, box-shadow .3s;
+        }
+        .apt-card:hover { transform:translateY(-6px); box-shadow:0 12px 36px rgba(26,107,138,.13); }
+        .apt-img {
+            height:200px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:2.5rem; color:white;
+        }
+        .apt-card:nth-child(1) .apt-img { background:linear-gradient(135deg,#1a6b8a,#2d9bbf); }
+        .apt-card:nth-child(2) .apt-img { background:linear-gradient(135deg,#2d6a4f,#52b788); }
+        .apt-card:nth-child(3) .apt-img { background:linear-gradient(135deg,#c77dff,#7b2d8b); }
+        .apt-card:nth-child(4) .apt-img { background:linear-gradient(135deg,#e07a5f,#f4a261); }
+        .apt-body { padding:22px; }
+        .apt-name {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.4rem; color:var(--dark); margin-bottom:4px;
+        }
+        .apt-cap { font-size:.8rem; color:var(--text-light); margin-bottom:12px; }
+        .apt-price {
+            font-size:1.1rem; color:var(--sea); font-weight:500;
+        }
+        .apt-price span { font-size:.8rem; color:var(--text-light); font-weight:400; }
+        .apt-features {
+            display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;
+        }
+        .apt-tag {
+            padding:3px 10px; background:var(--sea-pale);
+            border-radius:20px; font-size:.75rem; color:var(--sea);
+        }
+
+        /* ── GALLERY ── */
+        #gallery { background:var(--dark); padding:90px 5%; }
+        #gallery .section-title { color:white; }
+        #gallery .section-label { color:var(--sea-light); }
+        .gallery-grid {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows:200px 200px;
+            gap:12px; max-width:1100px; margin:40px auto 0;
+        }
+        .gallery-item {
+            border-radius:12px; overflow:hidden;
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; position:relative;
+            transition:transform .3s;
+        }
+        .gallery-item:hover { transform:scale(1.02); }
+        .gallery-item:nth-child(1) { grid-column:1/3; grid-row:1/3; }
+        .gallery-item .g-placeholder {
+            width:100%; height:100%;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            color:rgba(255,255,255,.5); font-size:.8rem;
+            gap:8px;
+        }
+        .gallery-item .g-placeholder .icon { font-size:2rem; }
+        .g1 { background:linear-gradient(135deg,#1a6b8a,#0d3d54); }
+        .g2 { background:linear-gradient(135deg,#2d6a4f,#1b4332); }
+        .g3 { background:linear-gradient(135deg,#c8a97a,#8b6b3d); }
+        .g4 { background:linear-gradient(135deg,#e07a5f,#9d3d28); }
+        .g5 { background:linear-gradient(135deg,#2d9bbf,#1a6b8a); }
+
+        /* ── CALENDAR ── */
+        #availability { background:var(--sea-pale); }
+        .cal-wrapper { max-width:1100px; margin:0 auto; }
+        .cal-legend {
+            display:flex; gap:20px; margin-bottom:30px; flex-wrap:wrap;
+        }
+        .leg-item { display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--text); }
+        .leg-dot { width:16px; height:16px; border-radius:4px; }
+        .leg-free   { background:#b7e4c7; }
+        .leg-booked { background:#e07a5f; }
+
+        .cal-nav {
+            display:flex; align-items:center; gap:16px;
+            margin-bottom:20px; flex-wrap:wrap;
+        }
+        .cal-nav button {
+            width:36px; height:36px; border-radius:50%;
+            border:1.5px solid var(--sea); background:white;
+            color:var(--sea); cursor:pointer; font-size:1rem;
+            display:flex; align-items:center; justify-content:center;
+            transition:all .2s;
+        }
+        .cal-nav button:hover { background:var(--sea); color:white; }
+        .cal-month-label {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.4rem; color:var(--dark); font-weight:600;
+            min-width:160px;
+        }
+
+        .cal-months {
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:24px;
+        }
+        .cal-month-block {
+            background:white; border-radius:16px; padding:20px;
+            box-shadow:0 2px 16px rgba(26,107,138,.06);
+        }
+        .cal-month-title {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.1rem; color:var(--sea); font-weight:600;
+            margin-bottom:14px; text-align:center;
+        }
+        .cal-apt-label {
+            font-size:.78rem; font-weight:600; color:var(--text-light);
+            text-transform:uppercase; letter-spacing:.08em;
+            margin-bottom:6px; padding:0 4px;
+        }
+        .cal-row {
+            display:flex; gap:3px; margin-bottom:4px; align-items:center;
+        }
+        .cal-apt-name {
+            width:70px; font-size:.75rem; color:var(--dark); font-weight:500;
+            flex-shrink:0; padding-right:6px;
+        }
+        .cal-days { display:flex; gap:2px; flex-wrap:nowrap; }
+        .cal-day {
+            width:22px; height:22px; border-radius:5px;
+            background:#b7e4c7; font-size:.65rem;
+            display:flex; align-items:center; justify-content:center;
+            color:#2d6a4f; font-weight:500; flex-shrink:0;
+        }
+        .cal-day.booked {
+            background:var(--coral); color:white;
+        }
+        .cal-day.past {
+            background:#e8e8e8; color:#aaa;
+        }
+        .cal-day-header {
+            display:flex; gap:2px; margin-bottom:6px; margin-left:76px;
+        }
+        .cal-day-num {
+            width:22px; text-align:center;
+            font-size:.6rem; color:var(--text-light); font-weight:500; flex-shrink:0;
+        }
+        #cal-loading {
+            text-align:center; padding:40px; color:var(--text-light);
+            font-style:italic;
+        }
+
+        /* ── BOOKING FORM ── */
+        #booking { background:white; }
+        .booking-wrap {
+            display:grid; grid-template-columns:1fr 1.2fr;
+            gap:60px; max-width:1000px; margin:0 auto;
+            align-items:start;
+        }
+        .booking-info-panel { padding-top:10px; }
+        .booking-info-panel p {
+            color:var(--text-light); line-height:1.8; margin-bottom:28px;
+        }
+        .contact-items { display:flex; flex-direction:column; gap:16px; }
+        .contact-item { display:flex; gap:14px; align-items:center; }
+        .contact-icon {
+            width:42px; height:42px; border-radius:12px;
+            background:var(--sea-pale); display:flex;
+            align-items:center; justify-content:center; font-size:1.1rem;
+        }
+        .contact-text strong { display:block; font-size:.9rem; color:var(--dark); }
+        .contact-text span { font-size:.85rem; color:var(--text-light); }
+
+        .booking-form-panel {
+            background:var(--white); border-radius:20px; padding:36px;
+            box-shadow:0 4px 30px rgba(26,107,138,.08);
+        }
+        .form-title {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.5rem; color:var(--dark); margin-bottom:24px;
+        }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .form-group { margin-bottom:18px; }
+        .form-group label {
+            display:block; font-size:.82rem; font-weight:500;
+            color:var(--text); margin-bottom:6px; letter-spacing:.02em;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width:100%; padding:11px 14px;
+            border:1.5px solid #dde6ec; border-radius:10px;
+            font-family:'DM Sans',sans-serif; font-size:.9rem;
+            color:var(--dark); background:white;
+            transition:border-color .2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline:none; border-color:var(--sea);
+        }
+        .form-group textarea { resize:vertical; min-height:90px; }
+        .date-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .form-submit {
+            width:100%; padding:14px;
+            background:var(--coral); color:white;
+            border:none; border-radius:40px; cursor:pointer;
+            font-family:'DM Sans',sans-serif; font-size:.95rem; font-weight:500;
+            transition:all .25s; margin-top:8px;
+        }
+        .form-submit:hover { background:#c8573a; transform:translateY(-1px); }
+        .form-note {
+            font-size:.77rem; color:var(--text-light);
+            text-align:center; margin-top:12px; line-height:1.5;
+        }
+        #form-success, #form-error {
+            display:none; padding:14px 18px; border-radius:10px;
+            font-size:.9rem; margin-top:16px; text-align:center;
+        }
+        #form-success { background:#d1f0d1; color:#2d6a4f; }
+        #form-error   { background:#fde8e3; color:#9d3d28; }
+
+        /* ── LOCATION ── */
+        #location { background:var(--sand); }
+        .location-grid {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:60px; max-width:1100px; margin:0 auto; align-items:center;
+        }
+        .map-placeholder {
+            height:360px; border-radius:20px; overflow:hidden;
+            background:linear-gradient(135deg,#1a6b8a,#2d9bbf);
+            display:flex; align-items:center; justify-content:center;
+            flex-direction:column; gap:12px; color:rgba(255,255,255,.7);
+        }
+        .map-placeholder .icon { font-size:3rem; }
+        .location-facts { display:flex; flex-direction:column; gap:20px; margin-top:28px; }
+        .loc-fact { display:flex; gap:14px; align-items:flex-start; }
+        .loc-icon {
+            width:40px; height:40px; border-radius:10px;
+            background:var(--sea); color:white;
+            display:flex; align-items:center; justify-content:center;
+            flex-size:1.1rem; flex-shrink:0;
+        }
+        .loc-text strong { display:block; font-size:.9rem; color:var(--dark); margin-bottom:2px; }
+        .loc-text span { font-size:.83rem; color:var(--text-light); line-height:1.5; }
+
+        /* ── FOOTER ── */
+        footer {
+            background:var(--dark); color:rgba(255,255,255,.6);
+            text-align:center; padding:40px 5%;
+        }
+        .footer-logo {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.6rem; color:white; margin-bottom:10px;
+        }
+        .footer-logo span { color:var(--coral); }
+        footer p { font-size:.83rem; line-height:1.7; }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:768px){
+            .about-grid, .booking-wrap, .location-grid { grid-template-columns:1fr; }
+            .form-row, .date-row { grid-template-columns:1fr; }
+            .about-text { padding-left:0; }
+            .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+            .gallery-item:nth-child(1) { grid-column:auto; grid-row:auto; }
+            .nav-links { display:none; }
+            .about-image-stack { height:260px; }
+        }
+
+        /* ── LANG SWITCHING ── */
+        [data-lang="hu"] { display:none; }
+        body.lang-hu [data-lang="en"] { display:none; }
+        body.lang-hu [data-lang="hu"] { display:revert; }
+    </style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav id="mainNav">
+    <div class="nav-logo">SunWave<span>.</span></div>
+    <div style="display:flex;align-items:center;gap:28px;">
+        <div class="nav-links">
+            <a href="#about"        data-lang="en">About</a>
+            <a href="#about"        data-lang="hu">Rólunk</a>
+            <a href="#apartments"   data-lang="en">Apartments</a>
+            <a href="#apartments"   data-lang="hu">Apartmanok</a>
+            <a href="#availability" data-lang="en">Availability</a>
+            <a href="#availability" data-lang="hu">Foglaltság</a>
+            <a href="#booking"      data-lang="en">Book Now</a>
+            <a href="#booking"      data-lang="hu">Foglalás</a>
+        </div>
+        <div class="lang-btn">
+            <button onclick="setLang('en')" id="btn-en" class="active">EN</button>
+            <button onclick="setLang('hu')" id="btn-hu">HU</button>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-content">
+        <p class="hero-eyebrow">Ražanj · Rogoznica · Croatia</p>
+        <h1 data-lang="en">Where the sun<br><em>meets the sea</em></h1>
+        <h1 data-lang="hu">Ahol a nap<br><em>találkozik a tengerrel</em></h1>
+        <p class="hero-sub" data-lang="en">4 apartments · Private beach access · Adriatic Sea</p>
+        <p class="hero-sub" data-lang="hu">4 apartman · Privát tengerparti hozzáférés · Adriai-tenger</p>
+        <div class="hero-cta">
+            <a href="#booking" class="btn-primary" data-lang="en">Request a Booking</a>
+            <a href="#booking" class="btn-primary" data-lang="hu">Foglalási igény</a>
+            <a href="#availability" class="btn-outline" data-lang="en">Check Availability</a>
+            <a href="#availability" class="btn-outline" data-lang="hu">Nézd meg a naptárat</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">4</div>
+                <div class="stat-label" data-lang="en">Apartments</div>
+                <div class="stat-label" data-lang="hu">Apartman</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">2–6</div>
+                <div class="stat-label" data-lang="en">Guests each</div>
+                <div class="stat-label" data-lang="hu">Fő / apartman</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">50m</div>
+                <div class="stat-label" data-lang="en">To the beach</div>
+                <div class="stat-label" data-lang="hu">A strandtól</div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-waves">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,50 1440,60 L1440,120 L0,120 Z" fill="#fdfcfa"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="about-grid">
+        <div class="about-image-stack">
+            <div class="about-img big">
+                <div class="img-placeholder">
+                    <span class="icon">🏖️</span>
+                    <span data-lang="en">Main photo</span>
+                    <span data-lang="hu">Főkép</span>
+                </div>
+            </div>
+            <div class="about-img small">
+                <div class="img-placeholder" style="color:var(--text-light);">
+                    <span class="icon">🌊</span>
+                    <span data-lang="en">Sea view</span>
+                    <span data-lang="hu">Tengerkép</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-text">
+            <p class="section-label" data-lang="en">About us</p>
+            <p class="section-label" data-lang="hu">Rólunk</p>
+            <h2 class="section-title" data-lang="en">A family retreat<br>on the <em>Adriatic coast</em></h2>
+            <h2 class="section-title" data-lang="hu">Egy családi menedék<br>az <em>Adriai-tengerparton</em></h2>
+            <p class="section-lead" data-lang="en">
+                Nestled in the charming village of Ražanj, our four apartments offer the perfect blend of comfort and authentic Croatian coastal living. Whether you're looking for a relaxing family holiday or a romantic getaway, SunWave is your home away from home.
+            </p>
+            <p class="section-lead" data-lang="hu">
+                A festői Ražanj faluban elhelyezkedő négy apartmanunk a tökéletes egyensúlyt kínálja a kényelem és az autentikus horvát tengerparti élet között. Legyen szó nyugodt családi nyaralásról vagy romantikus kikapcsolódásról, a SunWave az otthonod lesz a tengerparton.
+            </p>
+            <div class="about-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🌊</div>
+                    <div class="feature-text">
+                        <strong data-lang="en">Sea Access</strong>
+                        <strong data-lang="hu">Tengerparti hozzáférés</strong>
+                        <span data-lang="en">50m to the beach</span>
+                        <span data-lang="hu">50 m a strandtól</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🅿️</div>
+                    <div class="feature-text">
+                        <strong data-lang="en">Free Parking</strong>
+                        <strong data-lang="hu">Ingyenes parkoló</strong>
+                        <span data-lang="en">On-site parking</span>
+                        <span data-lang="hu">Helyszíni parkolás</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">❄️</div>
+                    <div class="feature-text">
+                        <strong data-lang="en">Air Conditioning</strong>
+                        <strong data-lang="hu">Légkondicionálás</strong>
+                        <span data-lang="en">All apartments</span>
+                        <span data-lang="hu">Minden apartmanban</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📶</div>
+                    <div class="feature-text">
+                        <strong data-lang="en">Free Wi-Fi</strong>
+                        <strong data-lang="hu">Ingyenes Wi-Fi</strong>
+                        <span data-lang="en">High-speed internet</span>
+                        <span data-lang="hu">Nagy sebességű internet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- APARTMENTS -->
+<section id="apartments">
+    <div class="apt-header">
+        <div>
+            <p class="section-label" data-lang="en">Our Apartments</p>
+            <p class="section-label" data-lang="hu">Apartmanjaink</p>
+            <h2 class="section-title" data-lang="en">Choose your <em>perfect stay</em></h2>
+            <h2 class="section-title" data-lang="hu">Válaszd ki a <em>tökéletes pihenést</em></h2>
+        </div>
+    </div>
+    <div class="apt-grid">
+        <div class="apt-card">
+            <div class="apt-img">🏠</div>
+            <div class="apt-body">
+                <div class="apt-name" data-lang="en">Apartment Seaside A</div>
+                <div class="apt-name" data-lang="hu">Seaside A Apartman</div>
+                <div class="apt-cap" data-lang="en">Up to 4 guests · A2+2</div>
+                <div class="apt-cap" data-lang="hu">Max. 4 fő · A2+2</div>
+                <div class="apt-price">€70 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-features">
+                    <span class="apt-tag" data-lang="en">Sea view</span><span class="apt-tag" data-lang="hu">Tengerkép</span>
+                    <span class="apt-tag" data-lang="en">Terrace</span><span class="apt-tag" data-lang="hu">Terasz</span>
+                    <span class="apt-tag">AC</span>
+                </div>
+            </div>
+        </div>
+        <div class="apt-card">
+            <div class="apt-img">🌿</div>
+            <div class="apt-body">
+                <div class="apt-name" data-lang="en">Apartment Garden B</div>
+                <div class="apt-name" data-lang="hu">Garden B Apartman</div>
+                <div class="apt-cap" data-lang="en">Up to 4 guests · A2+2</div>
+                <div class="apt-cap" data-lang="hu">Max. 4 fő · A2+2</div>
+                <div class="apt-price">€70 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-features">
+                    <span class="apt-tag" data-lang="en">Garden</span><span class="apt-tag" data-lang="hu">Kert</span>
+                    <span class="apt-tag" data-lang="en">Quiet</span><span class="apt-tag" data-lang="hu">Csendes</span>
+                    <span class="apt-tag">AC</span>
+                </div>
+            </div>
+        </div>
+        <div class="apt-card">
+            <div class="apt-img">🌅</div>
+            <div class="apt-body">
+                <div class="apt-name" data-lang="en">Apartment Sunset C</div>
+                <div class="apt-name" data-lang="hu">Sunset C Apartman</div>
+                <div class="apt-cap" data-lang="en">Up to 6 guests · A4+2</div>
+                <div class="apt-cap" data-lang="hu">Max. 6 fő · A4+2</div>
+                <div class="apt-price">€90 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-features">
+                    <span class="apt-tag" data-lang="en">Largest</span><span class="apt-tag" data-lang="hu">Legnagyobb</span>
+                    <span class="apt-tag" data-lang="en">Sea view</span><span class="apt-tag" data-lang="hu">Tengerkép</span>
+                    <span class="apt-tag">AC</span>
+                </div>
+            </div>
+        </div>
+        <div class="apt-card">
+            <div class="apt-img">✨</div>
+            <div class="apt-body">
+                <div class="apt-name" data-lang="en">Studio D</div>
+                <div class="apt-name" data-lang="hu">Studio D</div>
+                <div class="apt-cap" data-lang="en">Up to 2 guests · Studio</div>
+                <div class="apt-cap" data-lang="hu">Max. 2 fő · Stúdió</div>
+                <div class="apt-price">€60 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-features">
+                    <span class="apt-tag" data-lang="en">Cozy</span><span class="apt-tag" data-lang="hu">Hangulatos</span>
+                    <span class="apt-tag" data-lang="en">Couple</span><span class="apt-tag" data-lang="hu">Pároknak</span>
+                    <span class="apt-tag">AC</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+    <p class="section-label" data-lang="en">Gallery</p>
+    <p class="section-label" data-lang="hu">Galéria</p>
+    <h2 class="section-title" data-lang="en">See your future <em>holiday</em></h2>
+    <h2 class="section-title" data-lang="hu">Nézd meg a jövőbeli <em>nyaralásodat</em></h2>
+    <div class="gallery-grid">
+        <div class="gallery-item g1"><div class="g-placeholder"><span class="icon">🏖️</span><span data-lang="en">Main photo – beach</span><span data-lang="hu">Főkép – strand</span></div></div>
+        <div class="gallery-item g2"><div class="g-placeholder"><span class="icon">🌿</span><span data-lang="en">Garden view</span><span data-lang="hu">Kertrészlet</span></div></div>
+        <div class="gallery-item g3"><div class="g-placeholder"><span class="icon">🛋️</span><span data-lang="en">Living room</span><span data-lang="hu">Nappali</span></div></div>
+        <div class="gallery-item g4"><div class="g-placeholder"><span class="icon">🌅</span><span data-lang="en">Sunset</span><span data-lang="hu">Napnyugta</span></div></div>
+        <div class="gallery-item g5"><div class="g-placeholder"><span class="icon">🌊</span><span data-lang="en">Sea & terrace</span><span data-lang="hu">Tenger & terasz</span></div></div>
+    </div>
+</section>
+
+<!-- AVAILABILITY CALENDAR -->
+<section id="availability">
+    <div class="cal-wrapper">
+        <p class="section-label" data-lang="en">Availability</p>
+        <p class="section-label" data-lang="hu">Foglaltság</p>
+        <h2 class="section-title" data-lang="en">Check <em>availability</em></h2>
+        <h2 class="section-title" data-lang="hu">Ellenőrizd a <em>szabad napokat</em></h2>
+        <div class="cal-legend">
+            <div class="leg-item"><div class="leg-dot leg-free"></div><span data-lang="en">Available</span><span data-lang="hu">Szabad</span></div>
+            <div class="leg-item"><div class="leg-dot leg-booked"></div><span data-lang="en">Booked</span><span data-lang="hu">Foglalt</span></div>
+        </div>
+        <div class="cal-nav">
+            <button onclick="calPrev()">‹</button>
+            <span class="cal-month-label" id="calLabel"></span>
+            <button onclick="calNext()">›</button>
+        </div>
+        <div id="cal-loading" data-lang="en">Loading availability…</div>
+        <div id="cal-loading" data-lang="hu" style="display:none">Betöltés…</div>
+        <div class="cal-months" id="calMonths" style="display:none"></div>
+    </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section id="booking">
+    <div class="booking-wrap">
+        <div class="booking-info-panel">
+            <p class="section-label" data-lang="en">Contact & Booking</p>
+            <p class="section-label" data-lang="hu">Kapcsolat & Foglalás</p>
+            <h2 class="section-title" data-lang="en">Ready for your <em>Adriatic escape?</em></h2>
+            <h2 class="section-title" data-lang="hu">Készen állsz az <em>adriai kalandra?</em></h2>
+            <p data-lang="en">Fill in the form and we'll get back to you within 24 hours to confirm your booking. Booked dates are automatically blocked in the calendar.</p>
+            <p data-lang="hu">Töltsd ki az űrlapot és 24 órán belül visszajelzünk a foglalás megerősítéséről. A már foglalt dátumok automatikusan le vannak tiltva.</p>
+            <div class="contact-items">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-text">
+                        <strong>Email</strong>
+                        <span>sunwaverazanj@gmail.com</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <strong data-lang="en">Location</strong>
+                        <strong data-lang="hu">Helyszín</strong>
+                        <span>Ražanj, Rogoznica, Croatia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="booking-form-panel">
+            <div class="form-title" data-lang="en">Booking Request</div>
+            <div class="form-title" data-lang="hu">Foglalási igény</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label data-lang="en">First name *</label>
+                    <label data-lang="hu">Keresztnév *</label>
+                    <input type="text" id="f-firstname" required>
+                </div>
+                <div class="form-group">
+                    <label data-lang="en">Last name *</label>
+                    <label data-lang="hu">Vezetéknév *</label>
+                    <input type="text" id="f-lastname" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label data-lang="en">Email address *</label>
+                <label data-lang="hu">Email cím *</label>
+                <input type="email" id="f-email" required>
+            </div>
+            <div class="form-group">
+                <label data-lang="en">Phone number</label>
+                <label data-lang="hu">Telefonszám</label>
+                <input type="tel" id="f-phone">
+            </div>
+            <div class="form-group">
+                <label data-lang="en">Apartment</label>
+                <label data-lang="hu">Apartman</label>
+                <select id="f-apt">
+                    <option value="" data-lang="en">— Any / Not sure yet —</option>
+                    <option value="" data-lang="hu">— Bármelyik / Még nem tudom —</option>
+                    <option value="a1">Apartment Seaside A (max. 4)</option>
+                    <option value="a2">Apartment Garden B (max. 4)</option>
+                    <option value="a3">Apartment Sunset C (max. 6)</option>
+                    <option value="a4">Studio D (max. 2)</option>
+                </select>
+            </div>
+            <div class="date-row">
+                <div class="form-group">
+                    <label data-lang="en">Check-in *</label>
+                    <label data-lang="hu">Érkezés *</label>
+                    <input type="date" id="f-checkin" required>
+                </div>
+                <div class="form-group">
+                    <label data-lang="en">Check-out *</label>
+                    <label data-lang="hu">Távozás *</label>
+                    <input type="date" id="f-checkout" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label data-lang="en">Number of guests</label>
+                <label data-lang="hu">Vendégek száma</label>
+                <select id="f-guests">
+                    <option>1</option><option>2</option><option>3</option>
+                    <option>4</option><option>5</option><option>6</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label data-lang="en">Message (optional)</label>
+                <label data-lang="hu">Üzenet (opcionális)</label>
+                <textarea id="f-message" placeholder="..."></textarea>
+            </div>
+            <button class="form-submit" onclick="submitBooking()" data-lang="en">Send Request ✉️</button>
+            <button class="form-submit" onclick="submitBooking()" data-lang="hu">Küldés ✉️</button>
+            <div id="form-success" data-lang="en">✅ Message sent! We'll reply within 24 hours.</div>
+            <div id="form-success" data-lang="hu" style="display:none">✅ Üzenet elküldve! 24 órán belül visszajelzünk.</div>
+            <div id="form-error" data-lang="en">❌ Something went wrong. Please email us directly.</div>
+            <div id="form-error" data-lang="hu" style="display:none">❌ Valami hiba történt. Írj nekünk emailben.</div>
+            <p class="form-note" data-lang="en">This is a booking request, not an instant confirmation. We will contact you to confirm.</p>
+            <p class="form-note" data-lang="hu">Ez egy foglalási igény, nem azonnali visszaigazolás. Hamarosan felvesszük veled a kapcsolatot.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+    <div class="location-grid">
+        <div>
+            <p class="section-label" data-lang="en">Location</p>
+            <p class="section-label" data-lang="hu">Helyszín</p>
+            <h2 class="section-title" data-lang="en">Ražanj, <em>Rogoznica</em></h2>
+            <h2 class="section-title" data-lang="hu">Ražanj, <em>Rogoznica</em></h2>
+            <p class="section-lead" data-lang="en">A hidden gem on the Dalmatian coast, Ražanj offers crystal-clear waters, traditional fishing village charm, and a peaceful atmosphere far from the tourist crowds.</p>
+            <p class="section-lead" data-lang="hu">Egy rejtett gyöngyszem a dalmát tengerparton – Ražanj kristálytiszta vizeket, hagyományos halászfalusi hangulatot és nyugodt atmoszférát kínál, messze a turistatömegektől.</p>
+            <div class="location-facts">
+                <div class="loc-fact">
+                    <div class="loc-icon">🚗</div>
+                    <div class="loc-text">
+                        <strong data-lang="en">Split Airport</strong>
+                        <strong data-lang="hu">Split repülőtér</strong>
+                        <span data-lang="en">~60 km · approx. 50 min drive</span>
+                        <span data-lang="hu">~60 km · kb. 50 perc autóval</span>
+                    </div>
+                </div>
+                <div class="loc-fact">
+                    <div class="loc-icon">🏰</div>
+                    <div class="loc-text">
+                        <strong>Šibenik</strong>
+                        <span data-lang="en">~25 km · medieval city & UNESCO sites</span>
+                        <span data-lang="hu">~25 km · középkori város & UNESCO helyszínek</span>
+                    </div>
+                </div>
+                <div class="loc-fact">
+                    <div class="loc-icon">🌿</div>
+                    <div class="loc-text">
+                        <strong data-lang="en">Krka National Park</strong>
+                        <strong data-lang="hu">Krka Nemzeti Park</strong>
+                        <span data-lang="en">~35 km · waterfalls & nature</span>
+                        <span data-lang="hu">~35 km · vízesések & természet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="map-placeholder">
+            <span class="icon">🗺️</span>
+            <span style="font-size:.9rem;" data-lang="en">Map – Ražanj, Rogoznica</span>
+            <span style="font-size:.9rem;" data-lang="hu">Térkép – Ražanj, Rogoznica</span>
+            <span style="font-size:.75rem; margin-top:8px; opacity:.6" data-lang="en">(Google Maps embed goes here)</span>
+            <span style="font-size:.75rem; margin-top:8px; opacity:.6" data-lang="hu">(Google Maps beágyazás ide kerül)</span>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">SunWave<span>.</span></div>
+    <p>Ražanj, Rogoznica, Croatia · sunwaverazanj@gmail.com</p>
+    <p style="margin-top:12px;font-size:.75rem;opacity:.4;">© 2026 SunWave Apartments · All rights reserved</p>
+</footer>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+const GITHUB_OWNER = 'sunwaverazanj';
+const GITHUB_REPO  = 'sunwaverazanj.github.io';
+const BOOKINGS_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/bookings.json`;
+
+const APARTMENTS = [
+    { id:'a1', name:'A – Seaside' },
+    { id:'a2', name:'B – Garden' },
+    { id:'a3', name:'C – Sunset' },
+    { id:'a4', name:'D – Studio' },
+];
+
+// ── LANGUAGE ────────────────────────────────────────────────────────────
+function setLang(lang) {
+    document.body.className = `lang-${lang}`;
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    document.getElementById('btn-hu').classList.toggle('active', lang==='hu');
+    document.documentElement.lang = lang;
+    localStorage.setItem('sw_lang', lang);
+}
+const savedLang = localStorage.getItem('sw_lang') || 'en';
+setLang(savedLang);
+
+// ── NAVBAR SCROLL ────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── HERO PARTICLES ───────────────────────────────────────────────────────
+(function spawnParticles(){
+    const container = document.getElementById('particles');
+    for(let i=0;i<18;i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random()*50+10;
+        p.style.cssText = `
+            width:${size}px; height:${size}px;
+            left:${Math.random()*100}%;
+            top:${Math.random()*100}%;
+            animation-duration:${Math.random()*20+15}s;
+            animation-delay:${Math.random()*10}s;
+        `;
+        container.appendChild(p);
+    }
+})();
+
+// ── CALENDAR ─────────────────────────────────────────────────────────────
+let bookingsData = {};
+let calOffset = 0; // months from today
+
+const monthNamesEN = ['January','February','March','April','May','June',
+                      'July','August','September','October','November','December'];
+const monthNamesHU = ['Január','Február','Március','Április','Május','Június',
+                      'Július','Augusztus','Szeptember','Október','November','December'];
+
+async function loadBookings() {
+    try {
+        const res = await fetch(BOOKINGS_URL + '?t=' + Date.now());
+        const data = await res.json();
+        bookingsData = data.bookings || {};
+    } catch(e) {
+        console.warn('Could not load bookings:', e);
+        bookingsData = {};
+    }
+    document.querySelectorAll('#cal-loading').forEach(el => el.style.display='none');
+    document.getElementById('calMonths').style.display = 'grid';
+    renderCal();
+}
+
+function isBooked(aptId, dateStr) {
+    return Object.values(bookingsData).some(b =>
+        b.apartment === aptId && b.status === 'booked' && b.dates.includes(dateStr)
+    );
+}
+
+function getDaysInMonth(y,m){ return new Date(y,m+1,0).getDate(); }
+
+function renderCal() {
+    const today = new Date();
+    const container = document.getElementById('calMonths');
+    const lang = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
+    const monthNames = lang === 'hu' ? monthNamesHU : monthNamesEN;
+
+    container.innerHTML = '';
+
+    // Render 2 months
+    for(let offset=0; offset<2; offset++){
+        let d = new Date(today.getFullYear(), today.getMonth() + calOffset + offset, 1);
+        const year = d.getFullYear();
+        const month = d.getMonth();
+        const days = getDaysInMonth(year, month);
+
+        const block = document.createElement('div');
+        block.className = 'cal-month-block';
+
+        const title = document.createElement('div');
+        title.className = 'cal-month-title';
+        title.textContent = `${monthNames[month]} ${year}`;
+        block.appendChild(title);
+
+        // Day numbers header
+        const hdr = document.createElement('div');
+        hdr.className = 'cal-day-header';
+        for(let day=1; day<=days; day++){
+            const n = document.createElement('div');
+            n.className = 'cal-day-num';
+            n.textContent = day;
+            hdr.appendChild(n);
+        }
+        block.appendChild(hdr);
+
+        // Apartment rows
+        APARTMENTS.forEach(apt => {
+            const row = document.createElement('div');
+            row.className = 'cal-row';
+
+            const name = document.createElement('div');
+            name.className = 'cal-apt-name';
+            name.textContent = apt.name;
+            row.appendChild(name);
+
+            const days_wrap = document.createElement('div');
+            days_wrap.className = 'cal-days';
+
+            for(let day=1; day<=days; day++){
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                const cellDate = new Date(year, month, day);
+                const isPast = cellDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+                const cell = document.createElement('div');
+                cell.className = 'cal-day';
+                cell.textContent = '';
+                if(isPast) cell.classList.add('past');
+                else if(isBooked(apt.id, dateStr)) cell.classList.add('booked');
+                days_wrap.appendChild(cell);
+            }
+
+            row.appendChild(days_wrap);
+            block.appendChild(row);
+        });
+
+        container.appendChild(block);
+    }
+
+    // Update label
+    let d = new Date(today.getFullYear(), today.getMonth() + calOffset, 1);
+    const lang2 = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
+    const mn = lang2==='hu' ? monthNamesHU : monthNamesEN;
+    document.getElementById('calLabel').textContent =
+        `${mn[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function calPrev(){ calOffset = Math.max(calOffset-1, 0); renderCal(); }
+function calNext(){ calOffset++; renderCal(); }
+
+loadBookings();
+
+// ── DATE VALIDATION ───────────────────────────────────────────────────────
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('f-checkin').min  = today;
+document.getElementById('f-checkout').min = today;
+document.getElementById('f-checkin').addEventListener('change', function(){
+    document.getElementById('f-checkout').min = this.value;
+});
+
+// ── BOOKING FORM SUBMIT ───────────────────────────────────────────────────
+// Replace SCRIPT_URL with your Google Apps Script web app URL
+const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+
+async function submitBooking() {
+    const lang = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
+    const firstname = document.getElementById('f-firstname').value.trim();
+    const lastname  = document.getElementById('f-lastname').value.trim();
+    const email     = document.getElementById('f-email').value.trim();
+    const checkin   = document.getElementById('f-checkin').value;
+    const checkout  = document.getElementById('f-checkout').value;
+
+    if(!firstname || !lastname || !email || !checkin || !checkout){
+        alert(lang==='hu' ? 'Kérjük töltsd ki a kötelező mezőket!' : 'Please fill in all required fields!');
+        return;
+    }
+
+    const payload = {
+        name:     `${firstname} ${lastname}`,
+        email,
+        phone:    document.getElementById('f-phone').value,
+        apartment:document.getElementById('f-apt').value,
+        checkin,
+        checkout,
+        guests:   document.getElementById('f-guests').value,
+        message:  document.getElementById('f-message').value,
+        lang
+    };
+
+    // If no script URL set yet, open mail client as fallback
+    if(SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+        const subject = `SunWave Booking Request – ${payload.name} – ${checkin} to ${checkout}`;
+        const body = `Name: ${payload.name}%0AEmail: ${payload.email}%0APhone: ${payload.phone}%0AApartment: ${payload.apartment||'Any'}%0ACheck-in: ${checkin}%0ACheck-out: ${checkout}%0AGuests: ${payload.guests}%0AMessage: ${payload.message}`;
+        window.location.href = `mailto:sunwaverazanj@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        return;
+    }
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method:'POST',
+            mode:'no-cors',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(payload)
+        });
+        document.querySelectorAll('#form-success').forEach(el=>{
+            el.style.display = el.dataset.lang===lang||!el.dataset.lang ? 'block':'none';
+        });
+        document.querySelectorAll('#form-error').forEach(el=>el.style.display='none');
+        // reset
+        ['f-firstname','f-lastname','f-email','f-phone','f-message'].forEach(id=>{
+            document.getElementById(id).value='';
+        });
+    } catch(e) {
+        document.querySelectorAll('#form-error').forEach(el=>{
+            el.style.display = el.dataset.lang===lang||!el.dataset.lang ? 'block':'none';
+        });
+    }
+}
+</script>
+</body>
+</html>
