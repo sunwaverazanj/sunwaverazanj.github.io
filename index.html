@@ -1081,7 +1081,7 @@ document.getElementById('f-checkin').addEventListener('change', function(){
 
 // ── BOOKING FORM SUBMIT ───────────────────────────────────────────────────
 // Replace SCRIPT_URL with your Google Apps Script web app URL
-const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxqWpvEJPOpJxvUWK5lH2BsKqT-ilUns6hqwxJurN6Gx6SdKl5xxhJm8Ogg1p5_x1ld/exec';
 
 async function submitBooking() {
     const lang = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
@@ -1108,33 +1108,40 @@ async function submitBooking() {
         lang
     };
 
-    // If no script URL set yet, open mail client as fallback
     if(SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
-        const subject = `SunWave Booking Request – ${payload.name} – ${checkin} to ${checkout}`;
-        const body = `Name: ${payload.name}%0AEmail: ${payload.email}%0APhone: ${payload.phone}%0AApartment: ${payload.apartment||'Any'}%0ACheck-in: ${checkin}%0ACheck-out: ${checkout}%0AGuests: ${payload.guests}%0AMessage: ${payload.message}`;
-        window.location.href = `mailto:sunwaverazanj@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        alert(lang==='hu'
+            ? 'Az email küldés még nincs beállítva. Írj nekünk: sunwaverazanj@gmail.com'
+            : 'Email sending not configured yet. Contact us: sunwaverazanj@gmail.com');
         return;
     }
 
+    const submitBtn = document.querySelector('.form-submit:not([style*="none"])');
+    if(submitBtn){ submitBtn.disabled=true; submitBtn.textContent = lang==='hu' ? 'Küldés…' : 'Sending…'; }
+
     try {
-        await fetch(SCRIPT_URL, {
-            method:'POST',
-            mode:'no-cors',
-            headers:{'Content-Type':'application/json'},
+        const res = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        document.querySelectorAll('#form-success').forEach(el=>{
-            el.style.display = el.dataset.lang===lang||!el.dataset.lang ? 'block':'none';
-        });
-        document.querySelectorAll('#form-error').forEach(el=>el.style.display='none');
-        // reset
-        ['f-firstname','f-lastname','f-email','f-phone','f-message'].forEach(id=>{
-            document.getElementById(id).value='';
-        });
+        const json = await res.json();
+        if(json.status === 'ok'){
+            // show success
+            document.querySelectorAll('#form-success').forEach(el=>{
+                el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
+            });
+            document.querySelectorAll('#form-error').forEach(el=>el.style.display='none');
+            // reset fields
+            ['f-firstname','f-lastname','f-email','f-phone','f-message'].forEach(id=>{
+                document.getElementById(id).value='';
+            });
+        } else { throw new Error(json.message); }
     } catch(e) {
         document.querySelectorAll('#form-error').forEach(el=>{
-            el.style.display = el.dataset.lang===lang||!el.dataset.lang ? 'block':'none';
+            el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
         });
+    } finally {
+        if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent = lang==='hu' ? 'Küldés ✉️' : 'Send Request ✉️'; }
     }
 }
 </script>
