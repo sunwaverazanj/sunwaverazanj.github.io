@@ -1108,7 +1108,7 @@ async function submitBooking() {
         lang
     };
 
-    if(SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+    if(SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxqWpvEJPOpJxvUWK5lH2BsKqT-ilUns6hqwxJurN6Gx6SdKl5xxhJm8Ogg1p5_x1ld/exec'){
         alert(lang==='hu'
             ? 'Az email küldés még nincs beállítva. Írj nekünk: sunwaverazanj@gmail.com'
             : 'Email sending not configured yet. Contact us: sunwaverazanj@gmail.com');
@@ -1119,23 +1119,21 @@ async function submitBooking() {
     if(submitBtn){ submitBtn.disabled=true; submitBtn.textContent = lang==='hu' ? 'Küldés…' : 'Sending…'; }
 
     try {
-        const res = await fetch(SCRIPT_URL, {
+        // no-cors: nem olvasható a válasz, de az email megérkezik
+        await fetch(SCRIPT_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        const json = await res.json();
-        if(json.status === 'ok'){
-            // show success
-            document.querySelectorAll('#form-success').forEach(el=>{
-                el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
-            });
-            document.querySelectorAll('#form-error').forEach(el=>el.style.display='none');
-            // reset fields
-            ['f-firstname','f-lastname','f-email','f-phone','f-message'].forEach(id=>{
-                document.getElementById(id).value='';
-            });
-        } else { throw new Error(json.message); }
+        // Ha idáig eljutunk, a kérés elment
+        document.querySelectorAll('#form-success').forEach(el=>{
+            el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
+        });
+        document.querySelectorAll('#form-error').forEach(el=>el.style.display='none');
+        ['f-firstname','f-lastname','f-email','f-phone','f-message'].forEach(id=>{
+            document.getElementById(id).value='';
+        });
     } catch(e) {
         document.querySelectorAll('#form-error').forEach(el=>{
             el.style.display = (el.getAttribute('data-lang')===lang) ? 'block' : 'none';
