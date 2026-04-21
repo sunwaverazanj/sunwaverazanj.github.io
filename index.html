@@ -967,8 +967,14 @@ const MONTH_HU = ['Január','Február','Március','Április','Május','Június',
 function getDaysInMonth(y,m){ return new Date(y,m+1,0).getDate(); }
 function isWeekend(y,m,d){ const w=new Date(y,m,d).getDay(); return w===0||w===6; }
 function isBooked(aptId, dateStr){
-    return Object.values(bookingsData).some(b =>
-        b.apartment===aptId && b.status==='booked' && b.dates.includes(dateStr));
+    return Object.values(bookingsData).some(b => {
+        if(b.apartment !== aptId || b.status !== 'booked') return false;
+        if(!b.dates.includes(dateStr)) return false;
+        // Checkout day (last date) = free for new arrivals
+        const checkout = [...b.dates].sort().slice(-1)[0];
+        if(dateStr === checkout) return false;
+        return true;
+    });
 }
 
 async function loadBookings(){
@@ -1075,8 +1081,76 @@ loadBookings();
 const today = new Date().toISOString().split('T')[0];
 document.getElementById('f-checkin').min  = today;
 document.getElementById('f-checkout').min = today;
+
+// Returns set of dates that are FULLY booked (not checkout days)
+// Checkout day = last date of a booking = can still be used as check-in
+function getBlockedDates() {
+    const blocked = new Set();
+    Object.values(bookingsData).forEach(b => {
+        if(b.status !== 'booked') return;
+        const sorted = [...b.dates].sort();
+        const checkout = sorted[sorted.length - 1];
+        sorted.forEach(d => {
+            if(d !== checkout) blocked.add(d);
+        });
+    });
+    return blocked;
+}
+
+function showDateError(inputId, msgEn, msgHu) {
+    const lang = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
+    let errEl = document.getElementById(inputId + '-err');
+    if(!errEl) {
+        errEl = document.createElement('div');
+        errEl.id = inputId + '-err';
+        errEl.style.cssText = 'color:#c0392b;font-size:.8rem;margin-top:4px;';
+        document.getElementById(inputId).parentNode.appendChild(errEl);
+    }
+    errEl.textContent = lang === 'hu' ? msgHu : msgEn;
+}
+
+function clearDateError(inputId) {
+    const el = document.getElementById(inputId + '-err');
+    if(el) el.textContent = '';
+}
+
 document.getElementById('f-checkin').addEventListener('change', function(){
-    document.getElementById('f-checkout').min = this.value;
+    const val = this.value;
+    document.getElementById('f-checkout').min = val;
+    clearDateError('f-checkin');
+    if(!val) return;
+    const blocked = getBlockedDates();
+    if(blocked.has(val)) {
+        showDateError('f-checkin',
+            '⛔ This date is already booked. Please choose another day.',
+            '⛔ Ez a nap már foglalt. Kérjük válassz másik napot.');
+        this.value = '';
+    }
+});
+
+document.getElementById('f-checkout').addEventListener('change', function(){
+    const val = this.value;
+    const checkin = document.getElementById('f-checkin').value;
+    clearDateError('f-checkout');
+    if(!val || !checkin) return;
+
+    // Check if any date BETWEEN checkin and checkout (exclusive) is blocked
+    const blocked = getBlockedDates();
+    let d = new Date(checkin);
+    d.setDate(d.getDate() + 1); // start from day after checkin
+    const checkoutDate = new Date(val);
+    let conflict = false;
+    while(d < checkoutDate) {
+        const ds = d.toISOString().split('T')[0];
+        if(blocked.has(ds)) { conflict = true; break; }
+        d.setDate(d.getDate() + 1);
+    }
+    if(conflict) {
+        showDateError('f-checkout',
+            '⛔ Your selected period contains already booked dates.',
+            '⛔ A kiválasztott időszakban foglalt napok vannak.');
+        this.value = '';
+    }
 });
 
 // ── BOOKING FORM SUBMIT ───────────────────────────────────────────────────
