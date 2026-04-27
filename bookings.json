@@ -171,7 +171,7 @@
         "2026-08-16"
       ],
       "status": "booked",
-      "guestName": "Palics Egyed Mária HRHU ",
+      "guestName": "Palizs Egyed Mária HRHU ",
       "notes": ""
     },
     "booking_1774904168450_21": {
@@ -190,10 +190,27 @@
       "status": "booked",
       "guestName": "Darek Pl + embere",
       "notes": "Április 15 ig visszajeleznek, a baloldali 2+2 kell nekik"
+    },
+    "booking_1777278322271_22": {
+      "id": "booking_1777278322271_22",
+      "apartment": "a1",
+      "dates": [
+        "2026-06-27",
+        "2026-06-28",
+        "2026-06-29",
+        "2026-06-30",
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-04"
+      ],
+      "status": "booked",
+      "guestName": "Darek PL",
+      "notes": ""
     }
   },
   "apartmentInfo": {
-    "title": "🏖️Vismare Apartments",
+    "title": "🏖️SunWave Apartments Ražanj",
     "location": "Ražanj, Rogoznica, Horvátország"
   },
   "seasonMonths": {
