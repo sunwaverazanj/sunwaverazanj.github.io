@@ -83,7 +83,7 @@
             display: flex; flex-direction:column;
             align-items: center; justify-content: center;
             position: relative;
-            background: linear-gradient(160deg, #1c3d4f 0%, #1a6b8a 50%, #2d9bbf 100%);
+            background: linear-gradient(160deg, rgba(28,61,79,0.55) 0%, rgba(26,107,138,0.45) 100%), url('images/mainphoto.jpg') center/cover no-repeat;
             overflow: hidden;
             padding: 100px 5% 60px;
         }
@@ -569,20 +569,8 @@
 <section id="about">
     <div class="about-grid">
         <div class="about-image-stack">
-            <div class="about-img big">
-                <div class="img-placeholder">
-                    <span class="icon">🏖️</span>
-                    <span data-lang="en">Main photo</span>
-                    <span data-lang="hu">Főkép</span>
-                </div>
-            </div>
-            <div class="about-img small">
-                <div class="img-placeholder" style="color:var(--text-light);">
-                    <span class="icon">🌊</span>
-                    <span data-lang="en">Sea view</span>
-                    <span data-lang="hu">Tengerkép</span>
-                </div>
-            </div>
+            <div class="about-img big" style="background-image:url('images/mainphoto.jpg'); background-size:cover; background-position:center;"></div>
+            <div class="about-img small" style="background-image:url('images/seaview.jpg'); background-size:cover; background-position:center;"></div>
         </div>
         <div class="about-text">
             <p class="section-label" data-lang="en">About us</p>
@@ -718,7 +706,7 @@
     <h2 class="section-title" data-lang="en">See your future <em>holiday</em></h2>
     <h2 class="section-title" data-lang="hu">Nézd meg a jövőbeli <em>nyaralásodat</em></h2>
     <div class="gallery-grid">
-        <div class="gallery-item g1"><div class="g-placeholder"><span class="icon">🏖️</span><span data-lang="en">Main photo – beach</span><span data-lang="hu">Főkép – strand</span></div></div>
+        <div class="gallery-item g1" style="background-image:url('images/mainphoto-beach.jpg'); background-size:cover; background-position:center;"></div>
         <div class="gallery-item g2"><div class="g-placeholder"><span class="icon">🌿</span><span data-lang="en">Garden view</span><span data-lang="hu">Kertrészlet</span></div></div>
         <div class="gallery-item g3"><div class="g-placeholder"><span class="icon">🛋️</span><span data-lang="en">Living room</span><span data-lang="hu">Nappali</span></div></div>
         <div class="gallery-item g4"><div class="g-placeholder"><span class="icon">🌅</span><span data-lang="en">Sunset</span><span data-lang="hu">Napnyugta</span></div></div>
