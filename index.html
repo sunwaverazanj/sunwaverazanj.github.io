@@ -869,12 +869,11 @@
                 <label data-lang="en">Apartment</label>
                 <label data-lang="hu">Apartman</label>
                 <select id="f-apt">
-                    <option value="" data-lang="en">— Any / Not sure yet —</option>
-                    <option value="" data-lang="hu">— Bármelyik / Még nem tudom —</option>
-                    <option value="a1">Apartment Seaside A (max. 4)</option>
-                    <option value="a2">Apartment Garden B (max. 4)</option>
-                    <option value="a3">Apartment Sunset C (max. 6)</option>
-                    <option value="a4">Studio D (max. 2)</option>
+                    <option value="" id="apt-any-label">— Any / Not sure yet —</option>
+                    <option value="a1">Apartment A (2+2, max. 4)</option>
+                    <option value="a2">Apartment B (2+2, max. 4)</option>
+                    <option value="a3">Apartment C (4+2, max. 6)</option>
+                    <option value="a4">Studio D (2+1, max. 3)</option>
                 </select>
             </div>
             <div class="date-row">
@@ -999,6 +998,8 @@ function setLang(lang) {
     document.getElementById('btn-hu').classList.toggle('active', lang==='hu');
     document.documentElement.lang = lang;
     localStorage.setItem('sw_lang', lang);
+    const anyLabel = document.getElementById('apt-any-label');
+    if(anyLabel) anyLabel.textContent = lang==='hu' ? '— Bármelyik / Még nem tudom —' : '— Any / Not sure yet —';
 }
 const savedLang = localStorage.getItem('sw_lang') || 'en';
 setLang(savedLang);
