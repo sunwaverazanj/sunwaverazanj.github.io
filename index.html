@@ -1153,19 +1153,30 @@ const today = new Date().toISOString().split('T')[0];
 document.getElementById('f-checkin').min  = today;
 document.getElementById('f-checkout').min = today;
 
-// Returns set of dates that are FULLY booked (not checkout days)
-// Checkout day = last date of a booking = can still be used as check-in
-function getBlockedDates() {
+// Returns blocked dates for a specific apartment (or all if aptId empty)
+// Checkout day (last date) is NOT blocked - new guest can arrive that day
+function getBlockedDatesForApt(aptId) {
     const blocked = new Set();
     Object.values(bookingsData).forEach(b => {
         if(b.status !== 'booked') return;
+        if(aptId && b.apartment !== aptId) return;
         const sorted = [...b.dates].sort();
         const checkout = sorted[sorted.length - 1];
-        sorted.forEach(d => {
-            if(d !== checkout) blocked.add(d);
-        });
+        sorted.forEach(d => { if(d !== checkout) blocked.add(d); });
     });
     return blocked;
+}
+
+// If no apartment selected: only block if ALL 4 apartments are taken
+function isDateFullyBlocked(dateStr) {
+    return ['a1','a2','a3','a4'].every(aptId => {
+        return Object.values(bookingsData).some(b => {
+            if(b.status !== 'booked' || b.apartment !== aptId) return false;
+            const sorted = [...b.dates].sort();
+            const checkout = sorted[sorted.length - 1];
+            return b.dates.includes(dateStr) && dateStr !== checkout;
+        });
+    });
 }
 
 function showDateError(inputId, msgEn, msgHu) {
@@ -1185,18 +1196,24 @@ function clearDateError(inputId) {
     if(el) el.textContent = '';
 }
 
-document.getElementById('f-checkin').addEventListener('change', function(){
-    const val = this.value;
+function validateCheckin() {
+    const val = document.getElementById('f-checkin').value;
     document.getElementById('f-checkout').min = val;
     clearDateError('f-checkin');
     if(!val) return;
-    const blocked = getBlockedDates();
-    if(blocked.has(val)) {
+    const aptId = document.getElementById('f-apt').value;
+    const blocked = aptId ? getBlockedDatesForApt(aptId).has(val) : isDateFullyBlocked(val);
+    if(blocked) {
         showDateError('f-checkin',
-            '⛔ This date is already booked. Please choose another day.',
-            '⛔ Ez a nap már foglalt. Kérjük válassz másik napot.');
-        this.value = '';
+            '⛔ This date is not available for the selected apartment.',
+            '⛔ Ez a nap már foglalt a kiválasztott apartmanra.');
+        document.getElementById('f-checkin').value = '';
     }
+}
+
+document.getElementById('f-checkin').addEventListener('change', validateCheckin);
+document.getElementById('f-apt').addEventListener('change', function(){
+    if(document.getElementById('f-checkin').value) validateCheckin();
 });
 
 document.getElementById('f-checkout').addEventListener('change', function(){
@@ -1204,22 +1221,22 @@ document.getElementById('f-checkout').addEventListener('change', function(){
     const checkin = document.getElementById('f-checkin').value;
     clearDateError('f-checkout');
     if(!val || !checkin) return;
-
-    // Check if any date BETWEEN checkin and checkout (exclusive) is blocked
-    const blocked = getBlockedDates();
+    const aptId = document.getElementById('f-apt').value;
+    const blocked = getBlockedDatesForApt(aptId);
     let d = new Date(checkin);
-    d.setDate(d.getDate() + 1); // start from day after checkin
+    d.setDate(d.getDate() + 1);
     const checkoutDate = new Date(val);
     let conflict = false;
     while(d < checkoutDate) {
         const ds = d.toISOString().split('T')[0];
-        if(blocked.has(ds)) { conflict = true; break; }
+        const isBlocked = aptId ? blocked.has(ds) : isDateFullyBlocked(ds);
+        if(isBlocked) { conflict = true; break; }
         d.setDate(d.getDate() + 1);
     }
     if(conflict) {
         showDateError('f-checkout',
-            '⛔ Your selected period contains already booked dates.',
-            '⛔ A kiválasztott időszakban foglalt napok vannak.');
+            '⛔ Your selected period contains booked dates for this apartment.',
+            '⛔ A kiválasztott időszakban foglalt napok vannak ennél az apartmannál.');
         this.value = '';
     }
 });
