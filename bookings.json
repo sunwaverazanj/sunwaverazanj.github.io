@@ -231,6 +231,50 @@
       "status": "booked",
       "guestName": "Jacek Lukawski (PL)",
       "notes": "2026 os áron lefoglalt 75€/éj"
+    },
+    "booking_1778704216776_24": {
+      "id": "booking_1778704216776_24",
+      "apartment": "a1",
+      "dates": [
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30"
+      ],
+      "status": "booked",
+      "guestName": "Gyuszi haver",
+      "notes": ""
+    },
+    "booking_1778704250764_25": {
+      "id": "booking_1778704250764_25",
+      "apartment": "a2",
+      "dates": [
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30"
+      ],
+      "status": "booked",
+      "guestName": "Gyuszi haver",
+      "notes": ""
+    },
+    "booking_1778704275889_26": {
+      "id": "booking_1778704275889_26",
+      "apartment": "a4",
+      "dates": [
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30"
+      ],
+      "status": "booked",
+      "guestName": "Gyuszi haver",
+      "notes": ""
     }
   },
   "apartmentInfo": {
