@@ -249,7 +249,7 @@
         }
         .apt-card:hover { transform:translateY(-6px); box-shadow:0 12px 36px rgba(26,107,138,.13); }
         .apt-img {
-            height:200px;
+            height:200px; position:relative; overflow:hidden;
             display:flex; align-items:center; justify-content:center;
             font-size:2.5rem; color:white;
         }
@@ -257,6 +257,44 @@
         .apt-card:nth-child(2) .apt-img { background:linear-gradient(135deg,#2d6a4f,#52b788); }
         .apt-card:nth-child(3) .apt-img { background:linear-gradient(135deg,#c77dff,#7b2d8b); }
         .apt-card:nth-child(4) .apt-img { background:linear-gradient(135deg,#e07a5f,#f4a261); }
+
+        /* ── Apartment photo carousel ── */
+        .apt-img-track {
+            position:absolute; inset:0; display:flex;
+            height:100%; transition:transform .4s ease;
+        }
+        .apt-img-track img {
+            width:100%; height:100%; object-fit:cover;
+            flex-shrink:0; cursor:zoom-in; display:block;
+        }
+        .apt-img-nav {
+            position:absolute; top:50%; transform:translateY(-50%);
+            width:30px; height:30px; border-radius:50%; border:none;
+            background:rgba(28,43,53,0.45); color:white; font-size:1rem;
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; opacity:0; transition:opacity .2s, background .2s;
+            z-index:2;
+        }
+        .apt-img:hover .apt-img-nav { opacity:1; }
+        .apt-img-nav:hover { background:rgba(28,43,53,0.75); }
+        .apt-img-nav.prev { left:8px; }
+        .apt-img-nav.next { right:8px; }
+        .apt-img-dots {
+            position:absolute; bottom:10px; left:0; right:0;
+            display:flex; gap:6px; justify-content:center; z-index:2;
+        }
+        .apt-img-dots span {
+            width:6px; height:6px; border-radius:50%;
+            background:rgba(255,255,255,.5); cursor:pointer;
+            transition:background .2s, transform .2s;
+        }
+        .apt-img-dots span.active { background:white; transform:scale(1.3); }
+        .apt-img-count {
+            position:absolute; top:10px; right:10px; z-index:2;
+            background:rgba(28,43,53,0.55); color:white;
+            font-size:.72rem; padding:3px 9px; border-radius:20px;
+            display:flex; align-items:center; gap:4px; pointer-events:none;
+        }
         .apt-body { padding:22px; }
         .apt-name {
             font-family:'Cormorant Garamond',serif;
@@ -306,6 +344,53 @@
         .g3 { background:linear-gradient(135deg,#c8a97a,#8b6b3d); }
         .g4 { background:linear-gradient(135deg,#e07a5f,#9d3d28); }
         .g5 { background:linear-gradient(135deg,#2d9bbf,#1a6b8a); }
+        .gallery-item.has-photo::after {
+            content:'⤢'; position:absolute; top:10px; right:10px;
+            width:28px; height:28px; border-radius:50%;
+            background:rgba(28,43,53,0.5); color:white;
+            display:flex; align-items:center; justify-content:center;
+            font-size:.85rem; opacity:0; transition:opacity .2s;
+        }
+        .gallery-item.has-photo:hover::after { opacity:1; }
+
+        /* ── LIGHTBOX (shared: apartments + gallery) ── */
+        .lightbox {
+            position:fixed; inset:0; z-index:1000;
+            background:rgba(12,18,22,0.94);
+            display:none; align-items:center; justify-content:center;
+            padding:60px 20px;
+        }
+        .lightbox.open { display:flex; }
+        .lightbox img {
+            max-width:min(90vw,1100px); max-height:80vh;
+            object-fit:contain; border-radius:8px;
+            box-shadow:0 10px 50px rgba(0,0,0,.5);
+        }
+        .lightbox-close {
+            position:absolute; top:20px; right:24px;
+            width:44px; height:44px; border-radius:50%; border:none;
+            background:rgba(255,255,255,0.1); color:white; font-size:1.4rem;
+            cursor:pointer; transition:background .2s;
+        }
+        .lightbox-close:hover { background:rgba(255,255,255,0.22); }
+        .lightbox-nav {
+            position:absolute; top:50%; transform:translateY(-50%);
+            width:52px; height:52px; border-radius:50%; border:none;
+            background:rgba(255,255,255,0.1); color:white; font-size:1.6rem;
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; transition:background .2s;
+        }
+        .lightbox-nav:hover { background:rgba(255,255,255,0.22); }
+        .lightbox-nav.prev { left:16px; }
+        .lightbox-nav.next { right:16px; }
+        .lightbox-counter {
+            position:absolute; bottom:24px; left:0; right:0;
+            text-align:center; color:rgba(255,255,255,.7); font-size:.85rem;
+        }
+        @media (max-width:640px){
+            .lightbox-nav { width:42px; height:42px; font-size:1.3rem; }
+            .lightbox-nav.prev { left:6px; } .lightbox-nav.next { right:6px; }
+        }
 
         /* ── CALENDAR ── */
         #availability { background:var(--sea-pale); }
@@ -330,6 +415,15 @@
             font-family:'Cormorant Garamond',serif;
             font-size:1.1rem; color:var(--dark); font-weight:600;
         }
+        .cal-select {
+            font-family:'DM Sans',sans-serif;
+            font-size:.9rem; font-weight:500; color:var(--dark);
+            padding:8px 14px; border-radius:20px;
+            border:1.5px solid var(--sea); background:white;
+            cursor:pointer; transition:all .2s;
+        }
+        .cal-select:hover { border-color:var(--sea-light); }
+        .cal-select:focus { outline:none; box-shadow:0 0 0 3px rgba(26,107,138,.15); }
         .cal-scroll-box {
             overflow-x: auto;
             border-radius: 14px;
@@ -637,12 +731,12 @@
     </div>
     <div class="apt-grid">
         <div class="apt-card">
-            <div class="apt-img">🏠</div>
+            <div class="apt-img" data-apt="a1"><span class="img-fallback">🏠</span></div>
             <div class="apt-body">
-                <div class="apt-name">Apartment A</div>
+                <div class="apt-name">Apartment 1</div>
                 <div class="apt-cap" data-lang="en">2+2 guests · 45 m² · ID: 23031</div>
                 <div class="apt-cap" data-lang="hu">2+2 fő · 45 m² · ID: 23031</div>
-                <div class="apt-price">€65–75 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-price">€65–80 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
                 <div class="apt-features">
                     <span class="apt-tag">AC</span>
                     <span class="apt-tag">Wi-Fi</span>
@@ -652,12 +746,12 @@
             </div>
         </div>
         <div class="apt-card">
-            <div class="apt-img">🌿</div>
+            <div class="apt-img" data-apt="a2"><span class="img-fallback">🌿</span></div>
             <div class="apt-body">
-                <div class="apt-name">Apartment B</div>
+                <div class="apt-name">Apartment 2</div>
                 <div class="apt-cap" data-lang="en">2+2 guests · 45 m² · ID: 23032</div>
                 <div class="apt-cap" data-lang="hu">2+2 fő · 45 m² · ID: 23032</div>
-                <div class="apt-price">€65–75 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-price">€65–80 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
                 <div class="apt-features">
                     <span class="apt-tag">AC</span>
                     <span class="apt-tag">Wi-Fi</span>
@@ -667,12 +761,12 @@
             </div>
         </div>
         <div class="apt-card">
-            <div class="apt-img">🌅</div>
+            <div class="apt-img" data-apt="a3"><span class="img-fallback">🌅</span></div>
             <div class="apt-body">
-                <div class="apt-name">Apartment C</div>
+                <div class="apt-name">Apartment 3</div>
                 <div class="apt-cap" data-lang="en">4+2 guests · 50 m² · ID: 30814</div>
                 <div class="apt-cap" data-lang="hu">4+2 fő · 50 m² · ID: 30814</div>
-                <div class="apt-price">€80–100 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
+                <div class="apt-price">€80–105 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
                 <div class="apt-features">
                     <span class="apt-tag">AC</span>
                     <span class="apt-tag">Wi-Fi</span>
@@ -682,9 +776,9 @@
             </div>
         </div>
         <div class="apt-card">
-            <div class="apt-img">✨</div>
+            <div class="apt-img" data-apt="a4"><span class="img-fallback">✨</span></div>
             <div class="apt-body">
-                <div class="apt-name">Studio D</div>
+                <div class="apt-name">Studio 4</div>
                 <div class="apt-cap" data-lang="en">2+1 guests · 35 m² · ID: 31088</div>
                 <div class="apt-cap" data-lang="hu">2+1 fő · 35 m² · ID: 31088</div>
                 <div class="apt-price">€55–70 <span data-lang="en">/ night</span><span data-lang="hu">/ éjszaka</span></div>
@@ -708,25 +802,25 @@
                 <th style="padding:12px 8px;text-align:center;">Sep</th><th style="padding:12px 8px;text-align:center;">Oct</th>
             </tr></thead>
             <tbody>                <tr style="border-bottom:1px solid #edf2f5;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">A <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 1 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;background:#fafcfd;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">B <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 2 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">C <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 3 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€80</td><td style="padding:11px 8px;text-align:center;">€90</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€100</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€105</td>
                     <td style="padding:11px 8px;text-align:center;">€90</td><td style="padding:11px 8px;text-align:center;">€80</td>
                 </tr>
                 <tr style="background:#fafcfd;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">D Studio <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 4 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€55</td><td style="padding:11px 8px;text-align:center;">€60</td>
                     <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€70</td>
                     <td style="padding:11px 8px;text-align:center;">€60</td><td style="padding:11px 8px;text-align:center;">€55</td>
@@ -740,25 +834,25 @@
                 <th style="padding:12px 8px;text-align:center;">Szept</th><th style="padding:12px 8px;text-align:center;">Okt</th>
             </tr></thead>
             <tbody>                <tr style="border-bottom:1px solid #edf2f5;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">A <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 1 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;background:#fafcfd;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">B <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 2 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">C <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 3 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€80</td><td style="padding:11px 8px;text-align:center;">€90</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€100</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€105</td>
                     <td style="padding:11px 8px;text-align:center;">€90</td><td style="padding:11px 8px;text-align:center;">€80</td>
                 </tr>
                 <tr style="background:#fafcfd;">
-                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">D Studio <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
+                    <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 4 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€55</td><td style="padding:11px 8px;text-align:center;">€60</td>
                     <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€70</td>
                     <td style="padding:11px 8px;text-align:center;">€60</td><td style="padding:11px 8px;text-align:center;">€55</td>
@@ -779,12 +873,12 @@
     <p class="section-label" data-lang="hu">Galéria</p>
     <h2 class="section-title" data-lang="en">See your future <em>holiday</em></h2>
     <h2 class="section-title" data-lang="hu">Nézd meg a jövőbeli <em>nyaralásodat</em></h2>
-    <div class="gallery-grid">
-        <div class="gallery-item g1" style="background-image:url('images/mainphoto-beach.jpg'); background-size:cover; background-position:center;"></div>
-        <div class="gallery-item g2"><div class="g-placeholder"><span class="icon">🌿</span><span data-lang="en">Garden view</span><span data-lang="hu">Kertrészlet</span></div></div>
-        <div class="gallery-item g3"><div class="g-placeholder"><span class="icon">🛋️</span><span data-lang="en">Living room</span><span data-lang="hu">Nappali</span></div></div>
-        <div class="gallery-item g4"><div class="g-placeholder"><span class="icon">🌅</span><span data-lang="en">Sunset</span><span data-lang="hu">Napnyugta</span></div></div>
-        <div class="gallery-item g5"><div class="g-placeholder"><span class="icon">🌊</span><span data-lang="en">Sea & terrace</span><span data-lang="hu">Tenger & terasz</span></div></div>
+    <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item g1" data-idx="0" style="background-image:url('images/mainphoto-beach.jpg'); background-size:cover; background-position:center;"></div>
+        <div class="gallery-item g2" data-idx="1"><div class="g-placeholder"><span class="icon">🌿</span><span data-lang="en">Garden view</span><span data-lang="hu">Kertrészlet</span></div></div>
+        <div class="gallery-item g3" data-idx="2"><div class="g-placeholder"><span class="icon">🛋️</span><span data-lang="en">Living room</span><span data-lang="hu">Nappali</span></div></div>
+        <div class="gallery-item g4" data-idx="3"><div class="g-placeholder"><span class="icon">🌅</span><span data-lang="en">Sunset</span><span data-lang="hu">Napnyugta</span></div></div>
+        <div class="gallery-item g5" data-idx="4"><div class="g-placeholder"><span class="icon">🌊</span><span data-lang="en">Sea & terrace</span><span data-lang="hu">Tenger & terasz</span></div></div>
     </div>
 </section>
 
@@ -802,7 +896,8 @@
         </div>
         <div class="cal-nav">
             <button onclick="calPrev()" id="calPrevBtn">‹</button>
-            <span class="cal-nav-label" id="calLabel"></span>
+            <select class="cal-select" id="calMonthSelect" onchange="calGoToSelect()"></select>
+            <select class="cal-select" id="calYearSelect" onchange="calGoToSelect()"></select>
             <button onclick="calNext()">›</button>
         </div>
         <div id="cal-loading">Loading…</div>
@@ -870,10 +965,10 @@
                 <label data-lang="hu">Apartman</label>
                 <select id="f-apt">
                     <option value="" id="apt-any-label">— Any / Not sure yet —</option>
-                    <option value="a1">Apartment A (2+2, max. 4)</option>
-                    <option value="a2">Apartment B (2+2, max. 4)</option>
-                    <option value="a3">Apartment C (4+2, max. 6)</option>
-                    <option value="a4">Studio D (2+1, max. 3)</option>
+                    <option value="a1">Apartment 1 (2+2, max. 4)</option>
+                    <option value="a2">Apartment 2 (2+2, max. 4)</option>
+                    <option value="a3">Apartment 3 (4+2, max. 6)</option>
+                    <option value="a4">Studio 4 (2+1, max. 3)</option>
                 </select>
             </div>
             <div class="date-row">
@@ -978,6 +1073,15 @@
     <p style="margin-top:12px;font-size:.75rem;opacity:.4;">© 2026 SunWave Apartments · All rights reserved</p>
 </footer>
 
+<!-- LIGHTBOX (shared by apartment carousels + gallery) -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-nav prev" onclick="lightboxNav(-1)">‹</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav next" onclick="lightboxNav(1)">›</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────
 const GITHUB_OWNER = 'sunwaverazanj';
@@ -985,13 +1089,152 @@ const GITHUB_REPO  = 'sunwaverazanj.github.io';
 const BOOKINGS_URL = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/bookings.json`;
 
 const APARTMENTS = [
-    { id:'a1', name:'A – Seaside' },
-    { id:'a2', name:'B – Garden' },
-    { id:'a3', name:'C – Sunset' },
-    { id:'a4', name:'D – Studio' },
+    { id:'a1', name:'Apartman 1' },
+    { id:'a2', name:'Apartman 2' },
+    { id:'a3', name:'Apartman 3' },
+    { id:'a4', name:'Apartman 4' },
 ];
 
+// ── APARTMAN FOTÓK (automatikus felismerés) ────────────────────────────────
+// Csak nevezd el a képeket ennek a mintának megfelelően, és töltsd fel őket
+// az images/ mappába:  apt{apartman száma}-{sorszám}.{kiterjesztés}
+// Pl.: apt1-1.jpg, apt1-2.jpg, apt2-1.png, apt3-1.jpg, stb.
+// Apartmanonként 1-től 10-ig keresi a képeket (jpg/jpeg/png/webp), és csak
+// azokat jeleníti meg, amik ténylegesen fel vannak töltve – amelyik szám
+// hiányzik (pl. nincs apt1-10), az egyszerűen kimarad, üres placeholder
+// nélkül. Ha egy apartmanhoz egyáltalán nincs kép, marad a jelenlegi
+// emoji-ikon a kártyán.
+const APT_PHOTO_MAX = 10;
+const APT_PHOTO_EXTENSIONS = ['jpg','jpeg','png','webp'];
+const APT_PHOTOS_FOUND = {}; // { a1: ['images/apt1-1.jpg', ...], ... } – futásidőben töltődik fel
+
+function imageExists(src){
+    return fetch(src, { method: 'HEAD', cache: 'no-store' })
+        .then(res => res.ok)
+        .catch(() => false);
+}
+
+async function findAptPhotos(aptNum){
+    const checks = [];
+    for(let i=1; i<=APT_PHOTO_MAX; i++){
+        checks.push((async () => {
+            for(const ext of APT_PHOTO_EXTENSIONS){
+                const src = `images/apt${aptNum}-${i}.${ext}`;
+                if(await imageExists(src)) return src;
+            }
+            return null; // ez a sorszám nem létezik -> kihagyjuk
+        })());
+    }
+    return (await Promise.all(checks)).filter(Boolean);
+}
+
+// A fő Galéria szekció képei (data-idx sorrendben). Ha egy indexhez adsz
+// meg fájlt, az a placeholder helyett valódi, kinagyítható fotó lesz.
+const GALLERY_PHOTOS = [
+    'images/mainphoto-beach.jpg',
+    // 'images/garden.jpg',
+    // 'images/living-room.jpg',
+    // 'images/sunset.jpg',
+    // 'images/sea-terrace.jpg',
+];
+
+const aptCarouselState = {}; // { a1: currentIndex, ... }
+
+async function buildAptCarousels(){
+    const containers = document.querySelectorAll('.apt-img[data-apt]');
+    await Promise.all(Array.from(containers).map(async container => {
+        const aptId  = container.dataset.apt;    // pl. 'a1'
+        const aptNum = aptId.replace(/^a/, '');  // pl. '1'
+        const photos = await findAptPhotos(aptNum);
+        APT_PHOTOS_FOUND[aptId] = photos;
+        if(!photos.length) return; // nincs feltöltött kép -> marad az emoji/placeholder
+
+        aptCarouselState[aptId] = 0;
+        container.innerHTML = `
+            <div class="apt-img-track" id="track-${aptId}">
+                ${photos.map((src,i) => `<img src="${src}" loading="lazy" alt="" onclick="openLightbox(APT_PHOTOS_FOUND['${aptId}'], ${i})">`).join('')}
+            </div>
+            ${photos.length > 1 ? `
+                <button class="apt-img-nav prev" onclick="event.stopPropagation(); aptNav('${aptId}', -1)">‹</button>
+                <button class="apt-img-nav next" onclick="event.stopPropagation(); aptNav('${aptId}', 1)">›</button>
+                <div class="apt-img-dots" id="dots-${aptId}">
+                    ${photos.map((_,i) => `<span class="${i===0?'active':''}" onclick="event.stopPropagation(); showAptSlide('${aptId}', ${i})"></span>`).join('')}
+                </div>` : ''}
+            <div class="apt-img-count">📷 <span id="count-${aptId}">1/${photos.length}</span></div>
+        `;
+    }));
+}
+
+function showAptSlide(aptId, idx){
+    const photos = APT_PHOTOS_FOUND[aptId] || [];
+    if(!photos.length) return;
+    idx = (idx + photos.length) % photos.length;
+    aptCarouselState[aptId] = idx;
+    document.getElementById(`track-${aptId}`).style.transform = `translateX(-${idx*100}%)`;
+    document.getElementById(`count-${aptId}`).textContent = `${idx+1}/${photos.length}`;
+    document.querySelectorAll(`#dots-${aptId} span`).forEach((d,i) => d.classList.toggle('active', i===idx));
+}
+function aptNav(aptId, dir){ showAptSlide(aptId, (aptCarouselState[aptId]||0) + dir); }
+
+function buildGalleryLightbox(){
+    document.querySelectorAll('#galleryGrid .gallery-item').forEach(item => {
+        const idx = Number(item.dataset.idx);
+        const src = GALLERY_PHOTOS[idx];
+        if(!src) return; // nincs valódi kép -> placeholder marad, nem kattintható
+        item.classList.add('has-photo');
+        item.style.backgroundImage = `url('${src}')`;
+        item.style.backgroundSize = 'cover';
+        item.style.backgroundPosition = 'center';
+        item.innerHTML = '';
+        item.onclick = () => openLightbox(GALLERY_PHOTOS.filter(Boolean), GALLERY_PHOTOS.filter(Boolean).indexOf(src));
+    });
+}
+
+// ── LIGHTBOX ─────────────────────────────────────────────────────────────
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+
+function openLightbox(photos, index){
+    if(!photos || !photos.length) return;
+    lightboxPhotos = photos;
+    lightboxIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function lightboxNav(dir){
+    lightboxIndex = (lightboxIndex + dir + lightboxPhotos.length) % lightboxPhotos.length;
+    updateLightbox();
+}
+function updateLightbox(){
+    document.getElementById('lightboxImg').src = lightboxPhotos[lightboxIndex];
+    document.getElementById('lightboxCounter').textContent =
+        lightboxPhotos.length > 1 ? `${lightboxIndex+1} / ${lightboxPhotos.length}` : '';
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+    if(e.target.id === 'lightbox') closeLightbox();
+});
+document.addEventListener('keydown', e => {
+    if(!document.getElementById('lightbox').classList.contains('open')) return;
+    if(e.key === 'Escape') closeLightbox();
+    if(e.key === 'ArrowRight') lightboxNav(1);
+    if(e.key === 'ArrowLeft') lightboxNav(-1);
+});
+
+buildAptCarousels();
+buildGalleryLightbox();
+
 // ── LANGUAGE ────────────────────────────────────────────────────────────
+const MONTH_EN = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+const MONTH_HU = ['Január','Február','Március','Április','Május','Június',
+                  'Július','Augusztus','Szeptember','Október','November','December'];
+const CAL_YEARS_AHEAD = 2; // ennyi évre előre lehet foglalni/böngészni a legördülőkben
+
 function setLang(lang) {
     document.body.className = `lang-${lang}`;
     document.getElementById('btn-en').classList.toggle('active', lang==='en');
@@ -1000,6 +1243,7 @@ function setLang(lang) {
     localStorage.setItem('sw_lang', lang);
     const anyLabel = document.getElementById('apt-any-label');
     if(anyLabel) anyLabel.textContent = lang==='hu' ? '— Bármelyik / Még nem tudom —' : '— Any / Not sure yet —';
+    if(typeof populateCalSelects === 'function') populateCalSelects();
 }
 const savedLang = localStorage.getItem('sw_lang') || 'en';
 setLang(savedLang);
@@ -1031,13 +1275,17 @@ window.addEventListener('scroll', () => {
 let bookingsData = {};
 let calOffset = 0;
 
-const MONTH_EN = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-const MONTH_HU = ['Január','Február','Március','Április','Május','Június',
-                  'Július','Augusztus','Szeptember','Október','November','December'];
-
 function getDaysInMonth(y,m){ return new Date(y,m+1,0).getDate(); }
 function isWeekend(y,m,d){ const w=new Date(y,m,d).getDay(); return w===0||w===6; }
+
+// Helyi időzóna szerinti YYYY-MM-DD string, UTC-eltolódás nélkül.
+// (A toISOString() UTC-re konvertál, ami hajnalban 1 nappal el tudja csúsztatni a dátumot.)
+function localDateStr(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+}
 function isBooked(aptId, dateStr){
     return Object.values(bookingsData).some(b => {
         if(b.apartment !== aptId || b.status !== 'booked') return false;
@@ -1057,12 +1305,13 @@ async function loadBookings(){
     } catch(e){ bookingsData = {}; }
     document.getElementById('cal-loading').style.display = 'none';
     document.getElementById('calBox').style.display = 'block';
+    populateCalSelects();
     renderCal();
 }
 
 function renderCal(){
     const today    = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = localDateStr(today);
     const lang     = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
     const months   = lang==='hu' ? MONTH_HU : MONTH_EN;
     const table    = document.getElementById('calTable');
@@ -1081,8 +1330,13 @@ function renderCal(){
         monthCols.push({ y, m, days: getDaysInMonth(y,m), label: months[m]+' '+y });
     }
 
-    // ── Update nav label ─────────────────────────────────────────
-    document.getElementById('calLabel').textContent = monthCols[0].label;
+    // ── Update nav controls ────────────────────────────────────────
+    const monthSel = document.getElementById('calMonthSelect');
+    const yearSel  = document.getElementById('calYearSelect');
+    if(monthSel && yearSel){
+        monthSel.value = monthCols[0].m;
+        yearSel.value  = monthCols[0].y;
+    }
     document.getElementById('calPrevBtn').disabled = calOffset <= 0;
 
     // ── thead: row 1 – month headers ─────────────────────────────
@@ -1147,10 +1401,47 @@ function renderCal(){
 function calPrev(){ if(calOffset>0){ calOffset--; renderCal(); } }
 function calNext(){ calOffset++; renderCal(); }
 
+// ── CALENDAR MONTH/YEAR DROPDOWNS ───────────────────────────────────────
+// A nyilas lapozás mellett a hónap és év közvetlenül is kiválasztható.
+
+function populateCalSelects(){
+    const monthSel = document.getElementById('calMonthSelect');
+    const yearSel  = document.getElementById('calYearSelect');
+    if(!monthSel || !yearSel) return;
+
+    const lang   = document.body.classList.contains('lang-hu') ? 'hu' : 'en';
+    const months = lang==='hu' ? MONTH_HU : MONTH_EN;
+    const today  = new Date();
+
+    // aktuális kiválasztás megőrzése (ha még nincs, a mai hónap/év)
+    const curM = monthSel.value !== '' ? Number(monthSel.value) : today.getMonth();
+    const curY = yearSel.value  !== '' ? Number(yearSel.value)  : today.getFullYear();
+
+    monthSel.innerHTML = months.map((name,i) => `<option value="${i}">${name}</option>`).join('');
+    monthSel.value = curM;
+
+    let yearOptions = '';
+    for(let y = today.getFullYear(); y <= today.getFullYear() + CAL_YEARS_AHEAD; y++){
+        yearOptions += `<option value="${y}">${y}</option>`;
+    }
+    yearSel.innerHTML = yearOptions;
+    yearSel.value = curY;
+}
+
+function calGoToSelect(){
+    const targetM = Number(document.getElementById('calMonthSelect').value);
+    const targetY = Number(document.getElementById('calYearSelect').value);
+    const today = new Date();
+    let offset = (targetY - today.getFullYear()) * 12 + (targetM - today.getMonth());
+    if(offset < 0) offset = 0; // nem lehet a jelenlegi hónap elé menni
+    calOffset = offset;
+    renderCal();
+}
+
 loadBookings();
 
 // ── DATE VALIDATION ───────────────────────────────────────────────────────
-const today = new Date().toISOString().split('T')[0];
+const today = localDateStr(new Date());
 document.getElementById('f-checkin').min  = today;
 document.getElementById('f-checkout').min = today;
 
@@ -1229,7 +1520,7 @@ document.getElementById('f-checkout').addEventListener('change', function(){
     const checkoutDate = new Date(val);
     let conflict = false;
     while(d < checkoutDate) {
-        const ds = d.toISOString().split('T')[0];
+        const ds = localDateStr(d);
         const isBlocked = aptId ? blocked.has(ds) : isDateFullyBlocked(ds);
         if(isBlocked) { conflict = true; break; }
         d.setDate(d.getDate() + 1);
