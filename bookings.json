@@ -645,6 +645,46 @@
       "status": "booked",
       "guestName": "Darek",
       "notes": ""
+    },
+    "booking_1786558473583_58": {
+      "id": "booking_1786558473583_58",
+      "apartment": "a1",
+      "dates": [
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12",
+        "2026-09-13"
+      ],
+      "status": "booked",
+      "guestName": "Búvár",
+      "notes": ""
+    },
+    "booking_1786558481958_59": {
+      "id": "booking_1786558481958_59",
+      "apartment": "a3",
+      "dates": [
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12",
+        "2026-09-13"
+      ],
+      "status": "booked",
+      "guestName": "Búvár",
+      "notes": ""
+    },
+    "booking_1786558493784_60": {
+      "id": "booking_1786558493784_60",
+      "apartment": "a2",
+      "dates": [
+        "2026-09-02",
+        "2026-09-03",
+        "2026-09-04",
+        "2026-09-05",
+        "2026-09-06"
+      ],
+      "status": "booked",
+      "guestName": "Búvár",
+      "notes": ""
     }
   },
   "apartmentInfo": {
