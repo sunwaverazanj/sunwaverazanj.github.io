@@ -778,6 +778,25 @@
       "status": "booked",
       "guestName": "Sára",
       "notes": "októberig tartani"
+    },
+    "booking_1787599389205_71": {
+      "id": "booking_1787599389205_71",
+      "apartment": "a4",
+      "dates": [
+        "2027-08-26",
+        "2027-08-27",
+        "2027-08-28",
+        "2027-08-29",
+        "2027-08-30",
+        "2027-08-31",
+        "2027-09-01",
+        "2027-09-02",
+        "2027-09-03",
+        "2027-09-04"
+      ],
+      "status": "booked",
+      "guestName": "Anyáék",
+      "notes": ""
     }
   },
   "apartmentInfo": {
