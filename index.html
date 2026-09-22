@@ -591,9 +591,9 @@
         }
 
         /* ── LANG SWITCHING ── */
-        [data-lang="hu"] { display:none; }
-        body.lang-hu [data-lang="en"] { display:none; }
-        body.lang-hu [data-lang="hu"] { display:revert; }
+        [data-lang="hu"] { display:none !important; }
+        body.lang-hu [data-lang="en"] { display:none !important; }
+        body.lang-hu [data-lang="hu"] { display:revert !important; }
     </style>
 </head>
 <body class="lang-en">
@@ -646,7 +646,7 @@
                 <div class="stat-label" data-lang="hu">Fő / apartman</div>
             </div>
             <div class="stat">
-                <div class="stat-num">50m</div>
+                <div class="stat-num">200m</div>
                 <div class="stat-label" data-lang="en">To the beach</div>
                 <div class="stat-label" data-lang="hu">A strandtól</div>
             </div>
@@ -683,8 +683,8 @@
                     <div class="feature-text">
                         <strong data-lang="en">Sea Access</strong>
                         <strong data-lang="hu">Tengerparti hozzáférés</strong>
-                        <span data-lang="en">50m to the beach</span>
-                        <span data-lang="hu">50 m a strandtól</span>
+                        <span data-lang="en">200m to the beach</span>
+                        <span data-lang="hu">200 m a strandtól</span>
                     </div>
                 </div>
                 <div class="feature-item">
@@ -804,25 +804,25 @@
             <tbody>                <tr style="border-bottom:1px solid #edf2f5;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 1 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€85</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;background:#fafcfd;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 2 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€85</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 3 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€80</td><td style="padding:11px 8px;text-align:center;">€90</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€105</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€110</td>
                     <td style="padding:11px 8px;text-align:center;">€90</td><td style="padding:11px 8px;text-align:center;">€80</td>
                 </tr>
                 <tr style="background:#fafcfd;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartment 4 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€55</td><td style="padding:11px 8px;text-align:center;">€60</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€70</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
                     <td style="padding:11px 8px;text-align:center;">€60</td><td style="padding:11px 8px;text-align:center;">€55</td>
                 </tr></tbody>
         </table>
@@ -836,25 +836,25 @@
             <tbody>                <tr style="border-bottom:1px solid #edf2f5;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 1 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€85</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;background:#fafcfd;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 2 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+2 · 45m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€65</td><td style="padding:11px 8px;text-align:center;">€70</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€80</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€85</td>
                     <td style="padding:11px 8px;text-align:center;">€70</td><td style="padding:11px 8px;text-align:center;">€65</td>
                 </tr>
                 <tr style="border-bottom:1px solid #edf2f5;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 3 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">4+2 · 50m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€80</td><td style="padding:11px 8px;text-align:center;">€90</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€105</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€110</td>
                     <td style="padding:11px 8px;text-align:center;">€90</td><td style="padding:11px 8px;text-align:center;">€80</td>
                 </tr>
                 <tr style="background:#fafcfd;">
                     <td style="padding:11px 16px;font-weight:600;color:var(--dark);">Apartman 4 <span style="color:var(--text-light);font-weight:400;font-size:.8rem;">2+1 · 35m²</span></td>
                     <td style="padding:11px 8px;text-align:center;">€55</td><td style="padding:11px 8px;text-align:center;">€60</td>
-                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€70</td>
+                    <td style="padding:11px 8px;text-align:center;font-weight:600;color:var(--coral);">€75</td>
                     <td style="padding:11px 8px;text-align:center;">€60</td><td style="padding:11px 8px;text-align:center;">€55</td>
                 </tr></tbody>
         </table>
@@ -1024,16 +1024,16 @@
                     <div class="loc-text">
                         <strong data-lang="en">Split Airport</strong>
                         <strong data-lang="hu">Split repülőtér</strong>
-                        <span data-lang="en">~29 km · approx. 30 min drive</span>
-                        <span data-lang="hu">~29 km · kb. 30 perc autóval</span>
+                        <span data-lang="en">~29 km · approx. 50 min drive</span>
+                        <span data-lang="hu">~29 km · kb. 50 perc autóval</span>
                     </div>
                 </div>
                 <div class="loc-fact">
                     <div class="loc-icon">🏰</div>
                     <div class="loc-text">
                         <strong>Šibenik</strong>
-                        <span data-lang="en">~25 km · medieval city & UNESCO sites</span>
-                        <span data-lang="hu">~25 km · középkori város & UNESCO helyszínek</span>
+                        <span data-lang="en">~25 km · approx. 50 min drive · medieval city & UNESCO sites</span>
+                        <span data-lang="hu">~25 km · kb. 50 perc autóval · középkori város & UNESCO helyszínek</span>
                     </div>
                 </div>
                 <div class="loc-fact">
@@ -1041,8 +1041,8 @@
                     <div class="loc-text">
                         <strong data-lang="en">Sea</strong>
                         <strong data-lang="hu">Tenger</strong>
-                        <span data-lang="en">60 m · Beach 300 m · Center 300 m · Restaurant 300 m</span>
-                        <span data-lang="hu">60 m · Strand 300 m · Centrum 300 m · Étterem 300 m</span>
+                        <span data-lang="en">Beach 200 m · Center 300 m · Restaurant 300 m</span>
+                        <span data-lang="hu">Strand 200 m · Centrum 300 m · Étterem 300 m</span>
                     </div>
                 </div>
                 <div class="loc-fact">
@@ -1128,15 +1128,30 @@ async function findAptPhotos(aptNum){
     return (await Promise.all(checks)).filter(Boolean);
 }
 
-// A fő Galéria szekció képei (data-idx sorrendben). Ha egy indexhez adsz
-// meg fájlt, az a placeholder helyett valódi, kinagyítható fotó lesz.
+// A fő Galéria szekció képei (data-idx sorrendben). A 0. csempe (a nagy kép)
+// fix névre hallgat. A többi négy automatikusan felismerésre kerül: csak
+// töltsd fel a megfelelő nevű képet az images/ mappába (bármelyik
+// kiterjesztéssel: jpg/jpeg/png/webp), a kódot NEM kell hozzá szerkeszteni.
+// Pl.: images/garden.jpg vagy images/garden.png egyaránt működik.
+// Ha egy névhez nem tartozik feltöltött kép, az a csempe egyszerűen a
+// jelenlegi emoji-placeholdert mutatja tovább – a többi csempét ez nem zavarja.
+const GALLERY_SLOT_NAMES = ['garden', 'living-room', 'sunset', 'sea-terrace'];
 const GALLERY_PHOTOS = [
     'images/mainphoto-beach.jpg',
-    // 'images/garden.jpg',
-    // 'images/living-room.jpg',
-    // 'images/sunset.jpg',
-    // 'images/sea-terrace.jpg',
 ];
+
+async function findGalleryPhoto(baseName){
+    for(const ext of APT_PHOTO_EXTENSIONS){
+        const src = `images/${baseName}.${ext}`;
+        if(await imageExists(src)) return src;
+    }
+    return null; // nincs ilyen nevű feltöltött kép -> placeholder marad
+}
+
+async function findGalleryPhotos(){
+    const found = await Promise.all(GALLERY_SLOT_NAMES.map(findGalleryPhoto));
+    found.forEach((src, i) => { GALLERY_PHOTOS[i + 1] = src; }); // idx 0 a fix fő kép, 1–4 a fentiek
+}
 
 const aptCarouselState = {}; // { a1: currentIndex, ... }
 
@@ -1226,7 +1241,7 @@ document.addEventListener('keydown', e => {
 });
 
 buildAptCarousels();
-buildGalleryLightbox();
+findGalleryPhotos().then(buildGalleryLightbox);
 
 // ── LANGUAGE ────────────────────────────────────────────────────────────
 const MONTH_EN = ['January','February','March','April','May','June',
